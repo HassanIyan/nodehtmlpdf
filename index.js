@@ -5,6 +5,7 @@ const app = express()
 
 app.get('/pdf', async (req, res) => {
     try {
+        console.log(req.query.url)
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         const website_url = `https://${req.query.url}`; 
@@ -21,6 +22,7 @@ app.get('/pdf', async (req, res) => {
         res.contentType("application/pdf");
         return res.status(200).send(data)
     } catch (error) {
+        console.log(error)
         return res.status(500).send("failed")
     }
 })
