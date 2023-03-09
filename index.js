@@ -18,7 +18,7 @@ app.get('/pdf', async (req, res) => {
             format: 'A4',
         });
         await browser.close();
-        const data = fs.readFileSync(`./pdfs/${req.query.url}.pdf`);
+        const data = fs.readFileSync(`./pdfs/${req.query.url.replace("/", "-")}.pdf`);
         res.contentType("application/pdf");
         return res.status(200).send(data)
     } catch (error) {
