@@ -12,13 +12,13 @@ app.get('/pdf', async (req, res) => {
         await page.goto(website_url, { waitUntil: 'networkidle0' }); 
         await page.emulateMediaType('screen');
         const pdf = await page.pdf({
-            path: `pdfs/${req.query.url}.pdf`,
+            path: `pdfs/${(req.query.url.split("/")).join("-")}.pdf`,
             margin: { top: '100px', right: '50px', bottom: '100px', left: '50px' },
             printBackground: true,
             format: 'A4',
         });
         await browser.close();
-        const data = fs.readFileSync(`./pdfs/${req.query.url}.pdf`);
+        const data = fs.readFileSync(`./pdfs/${(req.query.url.split("/")).join("-")}.pdf`);
         res.contentType("application/pdf");
         return res.status(200).send(data)
     } catch (error) {
